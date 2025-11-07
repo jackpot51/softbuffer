@@ -187,6 +187,7 @@ targets = [
 
 [patch.crates-io]
 rustix = { git = "https://github.com/bytecodealliance/rustix" }
+winit = { git = "https://github.com/jackpot51/winit.git", branch = "redox-wayland" }
 # wayland-rs patches using git
 wayland-backend = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
 wayland-client = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
