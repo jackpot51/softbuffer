@@ -17,7 +17,7 @@ name = "buffer_mut"
 harness = false
 
 [features]
-default = ["kms", "x11", "x11-dlopen", "wayland", "wayland-dlopen"]
+default = ["wayland"]
 kms = ["bytemuck", "drm", "rustix"]
 wayland = [
     "wayland-backend",
@@ -48,7 +48,7 @@ tracing = { version = "0.1.41", default-features = false }
 bytemuck = "1.12.3"
 ndk = "0.9.0"
 
-[target.'cfg(all(unix, not(any(target_vendor = "apple", target_os = "android", target_os = "redox"))))'.dependencies]
+[target.'cfg(all(unix, not(any(target_vendor = "apple", target_os = "android"))))'.dependencies]
 as-raw-xcb-connection = { version = "1.0.0", optional = true }
 bytemuck = { version = "1.12.3", optional = true }
 drm = { version = "0.14.1", default-features = false, optional = true }
@@ -158,7 +158,7 @@ rayon = "1.5.1"
 [target.'cfg(target_arch = "wasm32")'.dev-dependencies]
 wasm-bindgen-test = "0.3"
 
-[target.'cfg(all(unix, not(any(target_vendor = "apple", target_os = "android", target_os = "redox"))))'.dev-dependencies]
+[target.'cfg(all(unix, not(any(target_vendor = "apple", target_os = "android"))))'.dev-dependencies]
 rustix = { version = "1.0.1", features = ["event"] }
 
 [workspace]
@@ -184,3 +184,26 @@ targets = [
     "x86_64-unknown-linux-gnu",
     "wasm32-unknown-unknown",
 ]
+
+[patch.crates-io]
+rustix = { git = "https://github.com/bytecodealliance/rustix" }
+# wayland-rs patches using git
+wayland-backend = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-client = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-cursor = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-egl = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-protocols = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-protocols-misc = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-protocols-wlr = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-server = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+wayland-sys = { git = "https://github.com/jackpot51/wayland-rs.git", branch = "redox" }
+# wayland-rs patches when using local changes
+#wayland-backend = { path = "../../wayland-rs/source/wayland-backend" }
+#wayland-client = { path = "../../wayland-rs/source/wayland-client" }
+#wayland-cursor = { path = "../../wayland-rs/source/wayland-cursor" }
+#wayland-egl = { path = "../../wayland-rs/source/wayland-egl" }
+#wayland-protocols = { path = "../../wayland-rs/source/wayland-protocols" }
+#wayland-protocols-misc = { path = "../../wayland-rs/source/wayland-protocols-misc" }
+#wayland-protocols-wlr = { path = "../../wayland-rs/source/wayland-protocols-wlr" }
+#wayland-server = { path = "../../wayland-rs/source/wayland-server" }
+#wayland-sys = { path = "../../wayland-rs/source/wayland-sys" }
